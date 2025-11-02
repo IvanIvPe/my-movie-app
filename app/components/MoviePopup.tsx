@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from 'react';
-// Uvozimo naš tip za film
 import type { Movie } from '../types';
 
 interface MoviePopupProps {

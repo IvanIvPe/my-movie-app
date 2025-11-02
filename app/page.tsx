@@ -23,10 +23,8 @@ export default function LoginPage() {
     event.preventDefault();
     setError('');
 
-
     if (username === 'micun' && password === 'Boopro2021') {
       console.log('Login successful:', { username, password });
-
       localStorage.setItem('access_token', 'fake_token');
       router.push('/movies');
       return;
@@ -43,7 +41,7 @@ export default function LoginPage() {
         body: JSON.stringify({
           username: username,
           password: password,
-          mac: 'al:b2:c3:d4:b5',
+          mac: 'al:b2c3:d4:b5',
           device_uid: 'TV12345',
           language_id: '2',
           device_type: 'SamsungTv'
@@ -54,9 +52,8 @@ export default function LoginPage() {
         const data = (await response.json()) as LoginSuccessResponse;
         console.log('Login successful:', data);
         localStorage.setItem('access_token', data.access_token);
-        router.push('/');
+        router.push('/movies');
       } else {
-
         const data = (await response.json()) as LoginErrorResponse;
         console.error('API Error Response:', data);
         console.error('API Error Status:', response.status); 
@@ -64,36 +61,32 @@ export default function LoginPage() {
         setError(`Error ${response.status}: ${errorMessage}`);
       }
     } catch (err) {
-
       console.error('Network or Request failed:', err);
       setError('Network request failed.');
     }
   };
 
+
   return (
-    <div>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+    <div className="simple-login-container">
+      <form className="simple-login-form" onSubmit={handleSubmit}>
+        <h1>Sign In</h1>
+        <input
+          type="text"
+          placeholder="Username"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Confirm</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
       </form>
     </div>
   );
